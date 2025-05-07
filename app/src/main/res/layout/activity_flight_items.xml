@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_bg"
+        android:backgroundTint="#fef9e7">
+
+        <TextView
+            android:id="@+id/tvRouteSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MAD ➝ BCN"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tvDatePassengerSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10-05-2025 ➝ 15-05-2025 - 2 pasajeros"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:background="#a2d9ce"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vuelos de ida"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Origen - Destino"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFlights"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

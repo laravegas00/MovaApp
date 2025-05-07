@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="12dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fcf3cf">
+
+            <TextView
+                android:id="@+id/tvSchedule"
+                android:text="lun, 23 jun · 10:15"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:id="@+id/tvRouteDeparture"
+                android:text="MAD - Aeropuerto Madrid-Barajas"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#424949"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvAirline"
+                android:text="Easyjet"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvDuration"
+                android:text="Duración del vuelo: 2h 20min"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvSchedule2"
+                android:text="lun, 23 jun · 10:15"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvRouteArrival"
+                android:text="LON - City of London"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#424949"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

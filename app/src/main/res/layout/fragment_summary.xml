@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- CONTENIDO SCROLLABLE -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- VUELO DE IDA -->
+            <TextView
+                android:text="Tu vuelo a Londres"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#00796B"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvSchedule"
+                android:text="Directo · 2h 20 min · Turista"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <LinearLayout
+                android:id="@+id/outboundContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- VUELO DE VUELTA -->
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/flecha"
+                app:tint="#FFB300"/>
+
+            <TextView
+                android:text="Tu vuelo a Madrid"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#00796B"
+                android:paddingBottom="8dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvSchedule2"
+                android:text="Directo · 2h 20 min · Turista"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <LinearLayout
+                android:id="@+id/returnContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- EQUIPAJE INCLUIDO -->
+            <TextView
+                android:text="Equipaje incluido"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="25dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:text="1 accesorio personal\nSe guarda debajo del asiento que tengas delante"
+                android:textSize="14sp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- BARRA FIJA EN LA PARTE INFERIOR -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvTotalPrice"
+            android:text="€202"
+            android:textSize="30sp"
+            android:textColor="#FFB300"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnSelect"
+            android:text="Seleccionar"
+            android:backgroundTint="#00796B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
