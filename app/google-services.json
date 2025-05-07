@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "301382297570",
+    "project_id": "movaapp-3b2b0",
+    "storage_bucket": "movaapp-3b2b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301382297570:android:49a2ee45e2061c25d03bbb",
+        "android_client_info": {
+          "package_name": "edu.pmdm.movaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVS2QfAt62mIHajosCxwcCMQAYWu-O3Js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

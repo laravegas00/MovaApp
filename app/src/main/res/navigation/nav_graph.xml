@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="edu.pmdm.movaapp.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_flightItemsFragment"
+            app:destination="@id/flightItemsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/flightItemsFragment"
+        android:name="edu.pmdm.movaapp.FlightItemsFragment"
+        tools:layout="@layout/activity_flight_items">
+
+        <argument
+            android:name="from"
+            app:argType="string" />
+
+        <argument
+            android:name="to"
+            app:argType="string" />
+
+        <argument
+            android:name="departureDate"
+            app:argType="string" />
+
+        <argument
+            android:name="returnDate"
+            app:argType="string"
+            app:nullable="true"/>
+
+        <argument
+            android:name="passengers"
+            app:argType="integer" />
+
+        <argument
+            android:name="fromFullName"
+            app:argType="string" />
+
+        <argument
+            android:name="toFullName"
+            app:argType="string" />
+
+
+        <argument
+            android:name="isReturn"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+        <action
+            android:id="@+id/action_flightItemsFragment_self"
+            app:destination="@id/flightItemsFragment" />
+
+        <action
+            android:id="@+id/action_flightItemsFragment_to_summaryFragment"
+            app:destination="@id/summaryFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="edu.pmdm.movaapp.SummaryFragment"
+        tools:layout="@layout/fragment_summary">
+
+        <argument
+            android:name="fromFullName"
+            app:argType="string" />
+
+        <argument
+            android:name="toFullName"
+            app:argType="string" />
+    </fragment>
+
+
+</navigation>
