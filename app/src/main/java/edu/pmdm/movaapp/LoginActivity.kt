@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: Button
     private lateinit var buttonGoogleSignIn: SignInButton
+    private lateinit var buttonGuest: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener { loginUser() }
         buttonRegister.setOnClickListener { registerUser() }
         buttonGoogleSignIn.setOnClickListener { loginWithGoogle() }
+        buttonGuest.setOnClickListener { redirectToMainActivity() }
     }
 
     private fun initializeUI() {

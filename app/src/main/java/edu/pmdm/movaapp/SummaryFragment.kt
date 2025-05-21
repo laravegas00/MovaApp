@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,9 @@ import edu.pmdm.movaapp.viewmodel.SharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 import androidx.activity.OnBackPressedCallback
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import edu.pmdm.movaapp.models.toMap
 
 
 class SummaryFragment : Fragment() {
@@ -62,6 +66,32 @@ class SummaryFragment : Fragment() {
         val price2 = viewModel.selectedReturnFlight.value?.price?.total?.toDoubleOrNull() ?: 0.0
         val currency = viewModel.selectedOutboundFlight.value?.price?.currency ?: "EUR"
         binding.tvTotalPrice.text = String.format("%.2f %s", price1 + price2, currency)
+
+        val select = binding.btnSelect
+        select.setOnClickListener {
+            val db = FirebaseFirestore.getInstance()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@setOnClickListener
+
+            val reserva = hashMapOf(
+                "totalPrice" to binding.tvTotalPrice.text.toString(),
+                "outbound" to viewModel.selectedOutboundFlight.value?.toMap(),
+                "return" to viewModel.selectedReturnFlight.value?.toMap()
+            )
+
+            db.collection("users")
+                .document(userId)
+                .collection("reservas")
+                .add(reserva)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Reserva guardada correctamente", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.homeFragment)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+                }
+
+        }
+
     }
 
     private fun bindFlight(container: LinearLayout, flight: FlightOffer, isReturn: Boolean) {
@@ -74,9 +104,9 @@ class SummaryFragment : Fragment() {
         val outFormatter = SimpleDateFormat("EEE, d MMM · HH:mm", Locale.getDefault())
 
         // Cabecera (info general)
-        val scheduleType = if (segments.size > 1) "Con escalas" else "Directo"
+        val scheduleType = if (segments.size > 1) "Con escalas" else "Direct"
         val duration = formatDuration(itinerary.duration)
-        val header = "$scheduleType · $duration · Turista"
+        val header = "$scheduleType · $duration · Turist"
 
         if (!isReturn) {
             binding.tvSchedule.text = header
@@ -95,7 +125,7 @@ class SummaryFragment : Fragment() {
             cardBinding.tvRouteDeparture.text = segment.departure.iataCode
             cardBinding.tvRouteArrival.text = segment.arrival.iataCode
             cardBinding.tvAirline.text = segment.carrierCode
-            cardBinding.tvDuration.text = "Duración del vuelo: ${formatDuration(segment.duration)}"
+            cardBinding.tvDuration.text = "Flight duration: ${formatDuration(segment.duration)}"
 
             container.addView(cardBinding.root)
         }

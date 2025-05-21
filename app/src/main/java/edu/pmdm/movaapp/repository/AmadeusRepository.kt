@@ -2,15 +2,15 @@ package edu.pmdm.movaapp.repository
 
 import FlightOffer
 import android.content.Context
-import edu.pmdm.movaapp.api.RetrofitClient
+import edu.pmdm.movaapp.api.Retrofit
 
 class AmadeusRepository(
     private val context: Context,
     private val clientId: String,
     private val clientSecret: String
 ) {
-    private val authService = RetrofitClient.authService()
-    private val flightService = RetrofitClient.flightService()
+    private val authService = Retrofit.authService()
+    private val flightService = Retrofit.flightService()
     //private val hotelService = RetrofitClient.hotelService()
 
     private suspend fun getValidToken(): String? {

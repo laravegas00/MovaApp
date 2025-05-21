@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
@@ -17,24 +16,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import edu.pmdm.movaapp.R
 import edu.pmdm.movaapp.adapter.AirportAdapter
-import edu.pmdm.movaapp.api.RetrofitClient
+import edu.pmdm.movaapp.api.Retrofit
 import edu.pmdm.movaapp.databinding.FragmentHomeBinding
 import edu.pmdm.movaapp.repository.AmadeusRepository
 import edu.pmdm.movaapp.repository.TokenManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-class HomeFragment : Fragment() {
+class FlightFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -157,7 +152,7 @@ class HomeFragment : Fragment() {
             val returnDate = returnApiDate.takeIf { it.isNotEmpty() }
             val passengers = binding.txtPassengerCount.text.toString().toIntOrNull() ?: 1
 
-            val action = HomeFragmentDirections
+            val action = FlightFragmentDirections
                 .actionHomeFragmentToFlightItemsFragment(
                     from = fromIata,
                     to = toIata,
@@ -206,7 +201,7 @@ class HomeFragment : Fragment() {
                 lifecycleScope.launch {
                     val token = TokenManager.getValidToken(requireContext()) ?: return@launch
                     try {
-                        val response = RetrofitClient.flightService()
+                        val response = Retrofit.flightService()
                             .getAirportSuggestions("Bearer $token", text.toString())
 
                         val results = response.data.map {

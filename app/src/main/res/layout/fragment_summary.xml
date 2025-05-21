@@ -22,7 +22,7 @@
 
             <!-- VUELO DE IDA -->
             <TextView
-                android:text="Tu vuelo a Londres"
+                android:text="Outbound Flight"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#00796B"
@@ -54,7 +54,7 @@
                 app:tint="#FFB300"/>
 
             <TextView
-                android:text="Tu vuelo a Madrid"
+                android:text="Return Flight"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#00796B"
@@ -78,7 +78,7 @@
 
             <!-- EQUIPAJE INCLUIDO -->
             <TextView
-                android:text="Equipaje incluido"
+                android:text="Included luggage"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:paddingTop="25dp"
@@ -123,7 +123,7 @@
 
         <Button
             android:id="@+id/btnSelect"
-            android:text="Seleccionar"
+            android:text="Select"
             android:backgroundTint="#00796B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -15,7 +15,7 @@ interface FlightService {
         @Query("departureDate") departureDate: String,
         @Query("returnDate") returnDate: String?,
         @Query("adults") adults: Int,
-        @Query("max") max: Int = 10
+        @Query("max") max: Int = 15
     ): FlightResponse
 
     @GET("v2/shopping/flight-offers")

@@ -1,5 +1,7 @@
 package edu.pmdm.movaapp
 
+import FlightOffer
+import FlightResponse
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +21,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Duration
+import java.time.format.DateTimeParseException
 
 class FlightItemsFragment : Fragment() {
 
@@ -35,6 +39,9 @@ class FlightItemsFragment : Fragment() {
     private var passengers: Int = 1
     private var fromFullName: String = ""
     private var toFullName: String = ""
+
+    private var allFlights: List<FlightOffer> = listOf()
+
 
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -80,8 +87,8 @@ class FlightItemsFragment : Fragment() {
         // Mostrar resumen
         if (isReturn) {
             binding.tvTitle.text = "Vuelos de vuelta"
-            binding.tvRouteSummary.text = "$fromFullName ➝ $toFullName"
-            binding.tvSummary.text = "$fromFullName ➝ $toFullName"
+            binding.tvRouteSummary.text = "$toFullName ➝ $fromFullName"
+            binding.tvSummary.text = "$toFullName ➝ $fromFullName"
             binding.tvDatePassengerSummary.text = "$returnDate - $passengers pasajero(s)"
         } else {
             binding.tvTitle.text = "Vuelos de ida"
@@ -144,31 +151,95 @@ class FlightItemsFragment : Fragment() {
     }
 
     private fun loadFlights() {
-        binding.loadingContainer.visibility = View.VISIBLE
+        _binding?.loadingContainer?.visibility = View.VISIBLE
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val flights = repository.searchFlights(from, to, departureDate, returnDate, passengers)
 
                 withContext(Dispatchers.Main) {
+                    if (!isAdded || _binding == null) return@withContext
+
                     if (!flights.isNullOrEmpty()) {
+                        allFlights = flights
                         flightAdapter.setFlights(flights)
+                        setupFilters()
                         Log.d("FlightItems", "Cargados ${flights.size} vuelos")
                     } else {
-                        Toast.makeText(requireContext(), "No se encontraron vuelos", Toast.LENGTH_SHORT).show()
+                        binding.recyclerFlights.visibility = View.GONE
+                        binding.noResultsContainer.visibility = View.VISIBLE
+
+                        binding.noResultsContainer.postDelayed({
+                            if (isAdded && findNavController().currentDestination?.id == R.id.flightItemsFragment) {
+                                findNavController().navigate(R.id.homeFragment)
+                            }
+                        }, 2500)
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    if (!isAdded || _binding == null) return@withContext
                     Log.e("FlightItems", "Error al cargar vuelos: ${e.localizedMessage}")
                     Toast.makeText(requireContext(), "Error al cargar vuelos", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 withContext(Dispatchers.Main) {
-                    binding.loadingContainer.visibility = View.GONE
+                    if (!isAdded || _binding == null) return@withContext
+                    _binding?.loadingContainer?.visibility = View.GONE
                 }
             }
         }
     }
+
+    private fun setupFilters() {
+        binding.chipPriceDesc.setOnClickListener { applyFilters() }
+        binding.chipDirect.setOnClickListener { applyFilters() }
+        binding.chipScales.setOnClickListener { applyFilters() }
+        binding.chipShortDuration.setOnClickListener { applyFilters() }
+    }
+
+    fun FlightOffer.getPriceValue(): Double {
+        return price.total.toDoubleOrNull() ?: Double.MAX_VALUE
+    }
+
+    fun FlightOffer.getTotalDurationMinutes(): Int {
+        return itineraries.sumOf {
+            try {
+                val duration = Duration.parse(it.duration)
+                duration.toMinutes().toInt()
+            } catch (e: DateTimeParseException) {
+                0
+            }
+        }
+    }
+
+    fun FlightOffer.getTotalStops(): Int {
+        return itineraries.sumOf { it.segments.size - 1 }
+    }
+
+    private fun applyFilters() {
+        var filtered = allFlights
+
+        // Escalas
+        if (binding.chipDirect.isChecked) {
+            filtered = filtered.filter { it.getTotalStops() == 0 }
+        } else if (binding.chipScales.isChecked) {
+            filtered = filtered.filter { it.getTotalStops() > 0 }
+        }
+
+        // Duración
+        if (binding.chipShortDuration.isChecked) {
+            filtered = filtered.sortedBy { it.getTotalDurationMinutes() }
+        }
+
+        // Precio
+        if (binding.chipPriceDesc.isChecked) {
+            filtered = filtered.sortedByDescending { it.getPriceValue() }
+        }
+
+        flightAdapter.setFlights(filtered)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
