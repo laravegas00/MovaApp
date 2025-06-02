@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import edu.pmdm.movaapp.api.Retrofit
 import edu.pmdm.movaapp.databinding.FragmentHomeBinding
 import edu.pmdm.movaapp.repository.AmadeusRepository
 import edu.pmdm.movaapp.repository.TokenManager
+import edu.pmdm.movaapp.viewmodel.SharedViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,6 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.getValue
 
 class FlightFragment : Fragment() {
 
@@ -39,8 +42,7 @@ class FlightFragment : Fragment() {
     private var fromFullText: String = ""
     private var toFullText: String = ""
 
-    private lateinit var fromAdapter: AirportAdapter
-    private lateinit var toAdapter: AirportAdapter
+    private val viewModel: SharedViewModel by activityViewModels()
 
     private var suppressTextChange = false
 
@@ -59,6 +61,20 @@ class FlightFragment : Fragment() {
             clientId = "wX1aknDANkB8S3zFGEzG9Z9MDXKAPvFx",
             clientSecret = "aGnRKAAA1KIStJaS"
         )
+
+        // Ocultar campo de llegada por defecto si "Solo ida" está activo
+        binding.etArrival.visibility = View.GONE
+
+        // Listener para cambiar entre Solo ida / Ida y vuelta
+        binding.rgTripType.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == binding.rbOneWay.id) {
+                binding.etArrival.visibility = View.GONE
+                binding.etArrival.setText("") // Limpia la fecha si estaba seleccionada
+            } else {
+                binding.etArrival.visibility = View.VISIBLE
+            }
+        }
+
 
         //Configuramos el buscador de aeropuertos
         setupAirportSearch(
@@ -145,17 +161,12 @@ class FlightFragment : Fragment() {
             fromFullText = binding.editTextFrom.text.toString().trim()
             toFullText = binding.editTextTo.text.toString().trim()
 
-            val fromIata = fromFullText.substringBefore(" -")
-            val toIata = toFullText.substringBefore(" -")
-
             val departure = departureApiDate
             val returnDate = returnApiDate.takeIf { it.isNotEmpty() }
             val passengers = binding.txtPassengerCount.text.toString().toIntOrNull() ?: 1
 
             val action = FlightFragmentDirections
                 .actionHomeFragmentToFlightItemsFragment(
-                    from = fromIata,
-                    to = toIata,
                     departureDate = departure,
                     returnDate = returnDate,
                     passengers = passengers,
@@ -168,6 +179,8 @@ class FlightFragment : Fragment() {
 
         return root
     }
+
+
 
     private fun setupAirportSearch(
         inputField: AutoCompleteTextView,
@@ -199,13 +212,18 @@ class FlightFragment : Fragment() {
 
             if (text != null && text.length >= 2 && inputField.hasFocus()) {
                 lifecycleScope.launch {
-                    val token = TokenManager.getValidToken(requireContext()) ?: return@launch
                     try {
-                        val response = Retrofit.flightService()
-                            .getAirportSuggestions("Bearer $token", text.toString())
+                        val response = Retrofit.hotelService().getAirportSuggestions(city = text.toString())
 
-                        val results = response.data.map {
-                            "${it.iataCode} - ${it.name} (${it.address.cityName})"
+                        // Guardar en el map y generar lista para el adapter
+                        val results = response.map { item ->
+                            val iata = item.iata_code
+                            val fullName = "${item.name} (${item.countryName})"
+
+                            // Guarda el nombre en el mapa del ViewModel
+                            viewModel.airportNameMap[iata] = fullName
+
+                            "$iata - $fullName"
                         }
 
                         withContext(Dispatchers.Main) {
@@ -222,6 +240,7 @@ class FlightFragment : Fragment() {
             }
         }
     }
+
 
 
     /**

@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
+
+    val airportNameMap = mutableMapOf<String, String>()
+
     private val _selectedOutboundFlight = MutableLiveData<FlightOffer?>()
     val selectedOutboundFlight: LiveData<FlightOffer?> = _selectedOutboundFlight
 

@@ -11,22 +11,6 @@ class AmadeusRepository(
 ) {
     private val authService = Retrofit.authService()
     private val flightService = Retrofit.flightService()
-    //private val hotelService = RetrofitClient.hotelService()
-
-    private suspend fun getValidToken(): String? {
-        var token = TokenManager.getValidToken(context)
-        if (token == null) {
-            try {
-                val authResponse = authService.getAccessToken(clientId, clientSecret)
-                token = authResponse.accessToken
-                TokenManager.saveToken(context, token, authResponse.expiresIn)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return null
-            }
-        }
-        return token
-    }
 
     suspend fun searchFlights(
         origin: String,
@@ -37,7 +21,6 @@ class AmadeusRepository(
     ): List<FlightOffer>? {
         var token = TokenManager.getValidToken(context)
 
-        // Si no hay token válido, autenticamos
         if (token == null) {
             val response = authService.getAccessToken(
                 clientId = clientId,
@@ -69,15 +52,5 @@ class AmadeusRepository(
         return result.data
     }
 
-//    // 🔹 HOTELS (cuando lo implementes)
-//    suspend fun searchHotels(...): List<Hotel>? {
-//        val token = getValidToken() ?: return null
-//        return try {
-//            hotelService.searchHotels("Bearer $token", ...)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            null
-//        }
-//    }
 }
 

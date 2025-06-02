@@ -1,7 +1,6 @@
 package edu.pmdm.movaapp
 
 import FlightOffer
-import FlightResponse
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,12 +41,8 @@ class FlightItemsFragment : Fragment() {
 
     private var allFlights: List<FlightOffer> = listOf()
 
-
-
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private var isReturn: Boolean = false
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,21 +57,23 @@ class FlightItemsFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
+                findNavController().navigate(R.id.flightFragment)
             }
         })
 
         // Recuperar argumentos del Safe Args
         arguments?.let {
             val args = FlightItemsFragmentArgs.fromBundle(it)
-            from = args.from
-            to = args.to
+            fromFullName = args.fromFullName
+            toFullName = args.toFullName
             departureDate = args.departureDate
             returnDate = args.returnDate
             passengers = args.passengers
-            fromFullName = args.fromFullName
-            toFullName = args.toFullName
             isReturn = args.isReturn
+
+
+            from = fromFullName.substringBefore(" -").trim()
+            to = toFullName.substringBefore(" -").trim()
         }
 
         Log.d("FlightItems", "CARGANDO: from=$from, to=$to, departureDate=$departureDate, returnDate=$returnDate")
@@ -107,30 +104,36 @@ class FlightItemsFragment : Fragment() {
                 val action = FlightItemsFragmentDirections
                     .actionFlightItemsFragmentToSummaryFragment(
                         fromFullName = fromFullName,
-                        toFullName = toFullName
+                        toFullName = toFullName,
+                        isReturnTrip = true
                     )
                 findNavController().navigate(action)
             } else {
                 sharedViewModel.setOutboundFlight(selectedFlight)
 
-                val action = FlightItemsFragmentDirections
-                    .actionFlightItemsFragmentSelf(
-                        from = to,
-                        to = from,
-                        departureDate = returnDate ?: "",
-                        returnDate = returnDate, // Ya no hay otra vuelta
-                        passengers = passengers,
-                        isReturn = true,
-                        fromFullName = fromFullName,
-                        toFullName = toFullName
-                    )
-                Log.d(
-                    "DEBUG",
-                    "Navegando a vuelos de vuelta con from=$to, to=$from, departureDate=$returnDate"
-                )
+                if (!returnDate.isNullOrBlank()) {
+                    // Ir a buscar vuelos de vuelta
+                    val action = FlightItemsFragmentDirections
+                        .actionFlightItemsFragmentSelf(
+                            departureDate = returnDate ?: "",
+                            returnDate = null,
+                            passengers = passengers,
+                            isReturn = true,
+                            fromFullName = toFullName,
+                            toFullName = fromFullName
+                        )
+                    findNavController().navigate(action)
+                } else {
+                    val action = FlightItemsFragmentDirections
+                        .actionFlightItemsFragmentToSummaryFragment(
+                            fromFullName = fromFullName,
+                            toFullName = toFullName,
+                            isReturnTrip = false
+                        )
 
-
-                findNavController().navigate(action)
+                    binding.tvDatePassengerSummary.text = "$departureDate - $passengers pasajero(s)"
+                    findNavController().navigate(action)
+                }
             }
         }
 
@@ -171,7 +174,7 @@ class FlightItemsFragment : Fragment() {
 
                         binding.noResultsContainer.postDelayed({
                             if (isAdded && findNavController().currentDestination?.id == R.id.flightItemsFragment) {
-                                findNavController().navigate(R.id.homeFragment)
+                                findNavController().navigate(R.id.flightFragment)
                             }
                         }, 2500)
                     }

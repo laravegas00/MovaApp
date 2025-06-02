@@ -69,7 +69,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precio"
+                android:text="Price"
                 android:backgroundTint="#00796B"
                 android:textColor="@color/white"
                 android:checkable="true" />
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00796B"
                 android:textColor="@color/white"
-                android:text="Directo"
+                android:text="Direct Flight"
                 android:checkable="true" />
 
             <com.google.android.material.chip.Chip
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00796B"
                 android:textColor="@color/white"
-                android:text="Con escalas"
+                android:text="With scales"
                 android:checkable="true" />
 
             <com.google.android.material.chip.Chip
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00796B"
                 android:textColor="@color/white"
-                android:text="Menor duración"
+                android:text="Less duration"
                 android:checkable="true" />
 
         </com.google.android.material.chip.ChipGroup>
@@ -111,7 +111,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vuelos de ida"
+        android:text="Outbound flights"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:textStyle="bold"/>

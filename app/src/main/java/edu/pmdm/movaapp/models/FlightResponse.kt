@@ -31,3 +31,13 @@ data class Price(
     val currency: String,
     val total: String
 )
+
+data class AirlinesResponse(
+    val data: List<Airline>
+)
+
+data class Airline(
+    val commonName: String,
+    val iataCode: String
+)
+
