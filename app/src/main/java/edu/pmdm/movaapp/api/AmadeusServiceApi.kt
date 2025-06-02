@@ -1,12 +1,12 @@
 package edu.pmdm.movaapp.api
 
+import AirlinesResponse
 import FlightResponse
-import edu.pmdm.movaapp.models.LocationResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-interface FlightService {
+interface AmadeusServiceApi {
     @GET("v2/shopping/flight-offers")
     suspend fun searchFlights(
         @Header("Authorization") authHeader: String,
@@ -29,15 +29,10 @@ interface FlightService {
     ): FlightResponse
 
 
-    @GET("v1/reference-data/locations")
-    suspend fun getAirportSuggestions(
-        @Header("Authorization") authHeader: String,
-        @Query("keyword") keyword: String,
-        @Query("subType") subType: String = "AIRPORT"
-    ): LocationResponse
-
-
-
+    @GET("v1/reference-data/airlines")
+    suspend fun getAirlines(
+        @Header("Authorization") authHeader: String
+    ): AirlinesResponse
 
 
 }

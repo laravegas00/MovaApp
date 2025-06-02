@@ -3,29 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/flightFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/flightFragment"
         android:name="edu.pmdm.movaapp.ui.home.FlightFragment"
+        android:label="Search your Flight"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_flightItemsFragment"
             app:destination="@id/flightItemsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reservationFragment"
+            app:destination="@id/reservationFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/flightItemsFragment"
         android:name="edu.pmdm.movaapp.FlightItemsFragment"
-        tools:layout="@layout/activity_flight_items">
-
-        <argument
-            android:name="from"
-            app:argType="string" />
-
-        <argument
-            android:name="to"
-            app:argType="string" />
+        android:label="Select your Flight"
+        tools:layout="@layout/fragment_flight_items">
 
         <argument
             android:name="departureDate"
@@ -66,7 +63,8 @@
 
     <fragment
         android:id="@+id/summaryFragment"
-        android:name="edu.pmdm.movaapp.SummaryFragment"
+        android:name="edu.pmdm.movaapp.FlightSummaryFragment"
+        android:label="Summary of your Flight"
         tools:layout="@layout/fragment_summary">
 
         <argument
@@ -76,6 +74,89 @@
         <argument
             android:name="toFullName"
             app:argType="string" />
+
+        <argument
+            android:name="isReturnTrip"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/hotelFragment"
+        android:name="edu.pmdm.movaapp.ui.gallery.HotelFragment"
+        android:label="Search your Hotel"
+        tools:layout="@layout/fragment_gallery">
+
+        <action
+            android:id="@+id/action_hotelFragment_to_hotelItemsFragment"
+            app:destination="@id/hotelItemsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/hotelItemsFragment"
+        android:name="edu.pmdm.movaapp.HotelItemsFragment"
+        android:label="Select your Hotel"
+        tools:layout="@layout/fragment_hotel_items">
+
+        <argument
+            android:name="destId"
+            app:argType="string" />
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+        <argument
+            android:name="checkIn"
+            app:argType="string" />
+        <argument
+            android:name="checkOut"
+            app:argType="string" />
+        <argument
+            android:name="adults"
+            app:argType="integer" />
+        <argument
+            android:name="nights"
+            app:argType="integer"
+            android:defaultValue="1" />
+
+        <action
+            android:id="@+id/action_hotelItemsFragment_to_hotelDetailsFragment"
+            app:destination="@id/detailsHotelFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsHotelFragment"
+        android:name="edu.pmdm.movaapp.DetailsHotelFragment"
+        android:label="Details of your Hotel">
+
+        <argument
+            android:name="hotel"
+            app:argType="edu.pmdm.movaapp.models.Hotel"
+            app:nullable="false" />
+        <argument
+            android:name="checkIn"
+            app:argType="string" />
+        <argument
+            android:name="checkOut"
+            app:argType="string" />
+        <argument
+            android:name="adults"
+            app:argType="integer" />
+        <argument
+            android:name="nights"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reservationFragment"
+        android:name="edu.pmdm.movaapp.ui.slideshow.ReservationFragment"
+        android:label="My Reservations"
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_homeFragment"
+            app:destination="@id/flightFragment" />
     </fragment>
 
 

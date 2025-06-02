@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Hotel Image -->
+        <ImageView
+            android:id="@+id/ivHotelImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Hotel image" />
+
+        <!-- Name and Rating -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:id="@+id/tvHotelName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hotel Name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvHotelRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8.5 ★"
+                android:textColor="@android:color/holo_orange_dark"
+                android:background="@drawable/bg_direct"
+                android:padding="6dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Location -->
+        <TextView
+            android:id="@+id/tvHotelLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="City, Country"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tvStayInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="29 May - 31 May, 2 nights, 1 guest"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCancelation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="6dp"
+            android:text="Free cancelation"
+            android:background="@drawable/bg_direct"
+            android:backgroundTint="#00796B"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+        <TextView
+            android:id="@+id/txtHotelPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Price for 2 nights"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+        <TextView
+            android:id="@+id/tvHotelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="540.85 EUR"
+            android:textColor="#00796B"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+    </LinearLayout>
+        <!-- Stay Info -->
+
+        <!-- Check-in / Check-out -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Check-in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvCheckIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From 14:00"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Check-out"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvCheckOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Until 11:00"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Facilities -->
+        <TextView
+            android:text="Facilities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+        <TextView
+            android:id="@+id/tvFacilities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WiFi • Pool • Breakfast"
+            android:textSize="14sp"
+            android:paddingTop="4dp" />
+
+        <!-- Distance -->
+
+        <!-- Map Placeholder -->
+        <FrameLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <!-- Reserve Button -->
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="Distance from centre: 1.2 km"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnReserve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reserve Now"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/teal_700"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

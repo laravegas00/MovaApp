@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/flightFragment">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/flightFragment"
         android:name="edu.pmdm.movaapp.ui.home.FlightFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="edu.pmdm.movaapp.ui.gallery.GalleryFragment"
+        android:id="@+id/hotelFragment"
+        android:name="edu.pmdm.movaapp.ui.gallery.HotelFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="edu.pmdm.movaapp.ui.slideshow.SlideshowFragment"
+        android:id="@+id/reservationFragment"
+        android:name="edu.pmdm.movaapp.ui.slideshow.ReservationFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

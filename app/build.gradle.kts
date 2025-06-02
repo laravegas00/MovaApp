@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
     id ("androidx.navigation.safeargs.kotlin")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -92,6 +93,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.10.0")
 
     implementation (libs.material)
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
 
 }
