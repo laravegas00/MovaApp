@@ -124,10 +124,12 @@ class MainActivity : AppCompatActivity() {
             .document(user?.uid ?: return)
             .get()
             .addOnSuccessListener { doc ->
-                val name = doc.getString("name") ?: ""
-                tvName.text = name
+                val encryptedName = doc.getString("name") ?: ""
+                val decryptedName = encryptHelper.decrypt(encryptedName)
+                tvName.text = decryptedName
             }
     }
+
 
 
 }
