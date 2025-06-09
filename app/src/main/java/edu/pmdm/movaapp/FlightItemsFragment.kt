@@ -62,7 +62,6 @@ class FlightItemsFragment : Fragment() {
             }
         })
 
-        // Recuperar argumentos del Safe Args
         arguments?.let {
             val args = FlightItemsFragmentArgs.fromBundle(it)
             fromFullName = args.fromFullName
@@ -77,7 +76,6 @@ class FlightItemsFragment : Fragment() {
             to = toFullName.substringBefore(" -").trim()
         }
 
-        // Mostrar resumen de parámetros
         isReturn = FlightItemsFragmentArgs.fromBundle(requireArguments()).isReturn
         val fechaInfo = if (!returnDate.isNullOrEmpty()) {
             "$departureDate ➝ $returnDate"
@@ -87,7 +85,6 @@ class FlightItemsFragment : Fragment() {
 
         val date = SimpleDateFormat("dd/MM/yyyy").format(SimpleDateFormat("yyyy-MM-dd").parse(fechaInfo))
 
-        // Mostrar resumen
         if (isReturn) {
             binding.tvTitle.text = "Return flight"
             binding.tvRouteSummary.text = "$toFullName ➝ $fromFullName"
@@ -100,7 +97,6 @@ class FlightItemsFragment : Fragment() {
             binding.tvDatePassengerSummary.text = "$date - $passengers passenger(s)"
         }
 
-        // Setup RecyclerView
         flightAdapter = FlightAdapter()
         flightAdapter.setOnFlightSelectedListener { selectedFlight ->
 
@@ -120,7 +116,6 @@ class FlightItemsFragment : Fragment() {
                 sharedViewModel.setOutboundFlight(selectedFlight)
 
                 if (!returnDate.isNullOrBlank()) {
-                    // Ir a buscar vuelos de vuelta
                     val action = FlightItemsFragmentDirections
                         .actionFlightItemsFragmentSelf(
                             departureDate = returnDate ?: "",
@@ -145,8 +140,6 @@ class FlightItemsFragment : Fragment() {
                 }
             }
         }
-
-
 
         binding.recyclerFlights.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -231,19 +224,16 @@ class FlightItemsFragment : Fragment() {
     private fun applyFilters() {
         var filtered = allFlights
 
-        // Escalas
         if (binding.chipDirect.isChecked) {
             filtered = filtered.filter { it.getTotalStops() == 0 }
         } else if (binding.chipScales.isChecked) {
             filtered = filtered.filter { it.getTotalStops() > 0 }
         }
 
-        // Duración
         if (binding.chipShortDuration.isChecked) {
             filtered = filtered.sortedBy { it.getTotalDurationMinutes() }
         }
 
-        // Precio
         if (binding.chipPriceDesc.isChecked) {
             filtered = filtered.sortedByDescending { it.getPriceValue() }
         }

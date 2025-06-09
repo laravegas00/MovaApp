@@ -42,11 +42,11 @@ class FlightHotelSummary : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vuelo = viewModel.selectedOutboundFlight.value
-        val vueloVuelta = viewModel.selectedReturnFlight.value
+        val outboundFlight = viewModel.selectedOutboundFlight.value
+        val returnFlight = viewModel.selectedReturnFlight.value
         val hotel = viewModel.selectedHotel.value
 
-        if (vuelo == null || hotel == null) {
+        if (outboundFlight == null || hotel == null) {
             Toast.makeText(requireContext(), "There are empty fields", Toast.LENGTH_SHORT).show()
             findNavController().navigateUp()
             return
@@ -56,7 +56,6 @@ class FlightHotelSummary : Fragment() {
         checkOutDate = args.checkOutDate
         guests = args.adults
 
-        // ---------- Sección Vuelo ----------
         binding.tvCheckInDate.text = formatDate(checkInDate)
         binding.tvCheckOutDate.text = formatDate(checkOutDate)
         binding.tvGuests.text = "$guests passengers · $guests guest"
@@ -64,15 +63,15 @@ class FlightHotelSummary : Fragment() {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-        val segIda = vuelo.itineraries[0].segments
+        val segIda = outboundFlight.itineraries[0].segments
         val depIda = formatter.parse(segIda.first().departure.at)
         val arrIda = formatter.parse(segIda.last().arrival.at)
         binding.tvResumenVuelo.text = "${segIda.first().departure.iataCode} ➝ ${segIda.last().arrival.iataCode}"
         binding.tvResumenHorasVuelo.text = "${timeFormatter.format(depIda!!)} - ${timeFormatter.format(arrIda!!)}"
-        binding.tvResumenDuracionVuelo.text = "Duration: ${formatDuration(vuelo.itineraries[0].duration)}"
-        binding.tvResumenPrecioVuelo.text = "Price: ${vuelo.price.total} ${vuelo.price.currency}"
+        binding.tvResumenDuracionVuelo.text = "Duration: ${formatDuration(outboundFlight.itineraries[0].duration)}"
+        binding.tvResumenPrecioVuelo.text = "Price: ${outboundFlight.price.total} ${outboundFlight.price.currency}"
 
-        vueloVuelta?.let {
+        returnFlight?.let {
             val segVuelta = it.itineraries[0].segments
             val depVuelta = formatter.parse(segVuelta.first().departure.at)
             val arrVuelta = formatter.parse(segVuelta.last().arrival.at)
@@ -84,7 +83,6 @@ class FlightHotelSummary : Fragment() {
             binding.vueltaContainer.visibility = View.GONE
         }
 
-        // ---------- Sección Hotel ----------
         binding.txtHotelName.text = hotel.hotel_name
         binding.txtHotelLocation.text = hotel.address
         binding.txtHotelPrice.text = "Hotel Price: %.2f ${hotel.currencycode}".format(hotel.min_total_price)
@@ -97,14 +95,14 @@ class FlightHotelSummary : Fragment() {
         binding.txtHotelLocation.text = hotel.address
         binding.txtHotelPrice.text = "Hotel price: ${hotel.min_total_price} EUR"
 
-        val total = (vuelo.price.total.toDoubleOrNull() ?: 0.0) +
-                (vueloVuelta?.price?.total?.toDoubleOrNull() ?: 0.0) +
+        val total = (outboundFlight.price.total.toDoubleOrNull() ?: 0.0) +
+                (returnFlight?.price?.total?.toDoubleOrNull() ?: 0.0) +
                 (hotel.min_total_price)
 
-        binding.txtTotal.text = "Total: %.2f ${vuelo.price.currency}".format(total)
+        binding.txtTotal.text = "Total: %.2f ${outboundFlight.price.currency}".format(total)
 
         binding.btnConfirmBooking.setOnClickListener {
-            saveCombinedReservation(vuelo, vueloVuelta, hotel, checkInDate, checkOutDate)
+            saveCombinedReservation(outboundFlight, returnFlight, hotel, checkInDate, checkOutDate)
         }
     }
 
@@ -164,7 +162,7 @@ class FlightHotelSummary : Fragment() {
             val minutes = duration.toMinutesPart()
             "${hours}h ${minutes}min"
         } catch (e: Exception) {
-            "Desconocida"
+            "--"
         }
     }
 

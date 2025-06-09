@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
 class FlightSummaryFragment : Fragment() {
 
     private var _binding: FragmentSummaryBinding? = null
@@ -86,7 +85,6 @@ class FlightSummaryFragment : Fragment() {
             }
         }
 
-        // Total
         val price1 = viewModel.selectedOutboundFlight.value?.price?.total?.toDoubleOrNull() ?: 0.0
         val price2 = viewModel.selectedReturnFlight.value?.price?.total?.toDoubleOrNull() ?: 0.0
         val currency = viewModel.selectedOutboundFlight.value?.price?.currency ?: "EUR"
@@ -99,7 +97,7 @@ class FlightSummaryFragment : Fragment() {
     }
 
     private fun bindFlight(container: LinearLayout, flight: FlightOffer, isReturn: Boolean) {
-        container.removeAllViews() // Limpia las tarjetas anteriores
+        container.removeAllViews()
 
         val itinerary = flight.itineraries[0]
         val segments = itinerary.segments
@@ -107,7 +105,6 @@ class FlightSummaryFragment : Fragment() {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val outFormatter = SimpleDateFormat("EEE, d MMM · HH:mm", Locale.getDefault())
 
-        // Cabecera (info general)
         val scheduleType = if (segments.size > 1) "With scales" else "Direct"
         val duration = formatDuration(itinerary.duration)
         val header = "$scheduleType · $duration · Turist"
@@ -138,8 +135,6 @@ class FlightSummaryFragment : Fragment() {
 
             container.addView(cardBinding.root)
         }
-
-        Log.d("EQUIPAJE", "TravelerPricings: ${flight.travelerPricings}")
 
         val baggageInfo = flight.travelerPricings
             .flatMap { it.fareDetailsBySegment }
@@ -213,6 +208,7 @@ class FlightSummaryFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("Do you want to book a hotel?")
             .setMessage("You can complete your reservation adding an hotel")
+            .setIcon(R.drawable.cama)
             .setPositiveButton("Yes") { _, _ ->
                 viewModel.selectedHotel.value = null
                 findNavController().navigate(R.id.action_flightSummaryFragment_to_hotelFragment)
@@ -249,7 +245,6 @@ class FlightSummaryFragment : Fragment() {
         if (returnFlight != null) {
             reserva["returnFlight"] = returnFlight.toMap(isReturn = true)
         }
-
 
         db.collection("users")
             .document(userId)
@@ -358,8 +353,6 @@ class FlightSummaryFragment : Fragment() {
             Toast.makeText(requireContext(), "Error retrieving user data", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

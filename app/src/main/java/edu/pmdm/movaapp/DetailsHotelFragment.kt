@@ -65,22 +65,17 @@ class DetailsHotelFragment : Fragment() {
         val args = DetailsHotelFragmentArgs.fromBundle(requireArguments())
         hotel = args.hotel
 
-        // Nombre, rating y localización
         binding.tvHotelName.text = hotel.hotel_name
         binding.tvHotelRating.text = "${hotel.review_score ?: "--"} ★"
         binding.tvHotelLocation.text = "${hotel.city ?: "Unknown"}, ${hotel.country_trans ?: ""}"
 
-        // Imagen
         Glide.with(requireContext())
             .load(hotel.max_photo_url ?: hotel.main_photo_url)
             .into(binding.ivHotelImage)
 
-        // Info de estancia
         val stayInfo = "${formatDate(args.checkIn)} → ${formatDate(args.checkOut)} \n ${args.nights} night(s), ${args.adults} guest(s)"
         binding.tvStayInfo.text = stayInfo
 
-
-        // Cancelación
         binding.tvCancelation.text = if (hotel.is_free_cancellable == 1)
             "Free cancellation"
         else
@@ -91,15 +86,12 @@ class DetailsHotelFragment : Fragment() {
         val price = hotel.min_total_price ?: 0.0
         binding.tvHotelPrice.text = String.format("%.2f %s", price, "EUR")
 
-        // Check-in / Check-out
         binding.tvCheckIn.text = hotel.checkin?.from ?: "From 14:00"
         binding.tvCheckOut.text = hotel.checkout?.until ?: "Until 11:00"
 
-        // Facilities
         repository = BookingRepository()
         loadFacilities()
 
-        // Distance
         binding.tvDistance.text = "Distance from centre: ${hotel.distance ?: "--"} km"
 
         val mapFragment = childFragmentManager
@@ -109,7 +101,6 @@ class DetailsHotelFragment : Fragment() {
                     .replace(R.id.mapContainer, it).commit()
             }
         mapFragment.getMapAsync(this::onMapReady)
-
 
         binding.btnReserve.setOnClickListener {
             val selectedHotel = hotel
@@ -173,7 +164,6 @@ class DetailsHotelFragment : Fragment() {
         }
     }
 
-
     private fun showFacilitiesDialog(facilities: List<String>) {
         val builder = android.app.AlertDialog.Builder(requireContext())
         builder.setTitle("List of all the facilities available")
@@ -208,11 +198,11 @@ class DetailsHotelFragment : Fragment() {
             .collection("reservation")
             .add(reservaHotel)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Reserva de hotel guardada correctamente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Hotel reservation saved correctly", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.hotelFragment)
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al guardar la reserva del hotel", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error saving hotel reservation", Toast.LENGTH_SHORT).show()
             }
     }
 

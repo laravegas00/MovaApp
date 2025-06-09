@@ -65,11 +65,9 @@ class HotelItemsFragment : Fragment() {
         nights = args.nights
 
         binding.tvRouteSummary.text = "$cityName"
-        binding.tvDatePassengerSummary.text = "${formatDate(checkIn)} ➝ ${formatDate(checkOut)} - $adults huésped(es)"
+        binding.tvDatePassengerSummary.text = "${formatDate(checkIn)} ➝ ${formatDate(checkOut)} - $adults guest (s)"
 
         binding.recyclerHotels.layoutManager = LinearLayoutManager(requireContext())
-
-        Log.d("HOTEL_DEBUG", "destId=$destId, checkIn=$checkIn, checkOut=$checkOut, adults=$adults")
 
         hotelAdapter = HotelAdapter { selectedHotel ->
             val action = HotelItemsFragmentDirections
@@ -115,7 +113,7 @@ class HotelItemsFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     Log.e("HOTEL_ITEMS", "Error: ${e.localizedMessage}")
                     if (!isAdded || _binding == null) return@withContext
-                    showNoResults("Ocurrió un error al buscar hoteles.")
+                    showNoResults("WOW! There are no hotels available.")
                 }
             }
         }

@@ -7,7 +7,6 @@ import android.widget.TextView
 import android.content.Intent
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val headerView = navView.getHeaderView(0) // Accede al header del Drawer
+        val headerView = navView.getHeaderView(0)
 
         val btnEditUser = headerView.findViewById<Button>(R.id.btnEditUser)
         btnEditUser.setOnClickListener {
@@ -59,7 +57,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -67,14 +64,14 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_user_guide -> {
-                mostrarManualDeUsuario()
+                showUserManual()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun mostrarManualDeUsuario() {
+    private fun showUserManual() {
         AlertDialog.Builder(this)
             .setTitle("User guide")
             .setMessage("""
@@ -112,10 +109,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        actualizarHeaderUsuario()
+        updateUserHeader()
     }
 
-    private fun actualizarHeaderUsuario() {
+    private fun updateUserHeader() {
         val headerView = binding.navView.getHeaderView(0)
         val tvName = headerView.findViewById<TextView>(R.id.tvName)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvEmail)
@@ -123,7 +120,6 @@ class MainActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         tvEmail.text = user?.email ?: ""
 
-        // Recuperar datos desde Firestore
         FirebaseFirestore.getInstance().collection("users")
             .document(user?.uid ?: return)
             .get()

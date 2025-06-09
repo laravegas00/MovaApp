@@ -1,7 +1,6 @@
 package edu.pmdm.movaapp.viewmodel
 
 import FlightOffer
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.pmdm.movaapp.models.Hotel

@@ -60,7 +60,7 @@ class UserDataFragment : Fragment() {
                 .set(data)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Data saved successfully", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack() // vuelve al fragmento anterior para continuar
+                    findNavController().popBackStack()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(), "Error saving data", Toast.LENGTH_SHORT).show()
@@ -68,7 +68,6 @@ class UserDataFragment : Fragment() {
         }
 
         binding.btnEdit.setOnClickListener {
-            // Permite edición mostrando los EditText y ocultando el resumen
             binding.etName.visibility = View.VISIBLE
             binding.etEmail.visibility = View.VISIBLE
             binding.etEmail.setText(auth.currentUser?.email ?: "")
@@ -103,7 +102,6 @@ class UserDataFragment : Fragment() {
                     val phone = document.getString("phone") ?: ""
 
                     if (name.isNotEmpty() && email.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
-                        // Mostrar resumen
                         val resumen = "Name: $name\nEmail: $email\nAddress: $address\nPhone: $phone"
                         binding.tvSummary.text = resumen
                         binding.tvSummary.visibility = View.VISIBLE
@@ -114,7 +112,6 @@ class UserDataFragment : Fragment() {
                         binding.etAddress.visibility = View.GONE
                         binding.etPhone.visibility = View.GONE
                     } else {
-                        // Mostrar datos en campos para edición
                         binding.etName.setText(name)
                         binding.etEmail.setText(email)
                         binding.etEmail.isEnabled = false

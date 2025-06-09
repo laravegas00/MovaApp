@@ -13,9 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import edu.pmdm.movaapp.adapter.ReservationAdapter
 import edu.pmdm.movaapp.databinding.FragmentSlideshowBinding
 import edu.pmdm.movaapp.models.Reservation
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class ReservationFragment : Fragment() {
 
@@ -38,12 +35,12 @@ class ReservationFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        cargarReservasUsuario()
+        loadUserReservations()
 
         return root
     }
 
-    private fun cargarReservasUsuario() {
+    private fun loadUserReservations() {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -83,7 +80,6 @@ class ReservationFragment : Fragment() {
     private fun applyFilters() {
         var filtered = allReservations
 
-        // Filtro por tipo
         filtered = when {
             binding.chipFlight.isChecked -> filtered.filter { it.type == "flight" }
             binding.chipHotel.isChecked -> filtered.filter { it.type == "hotel" }
