@@ -13,7 +13,6 @@ import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.SignInButton
@@ -36,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: Button
     private lateinit var buttonGoogleSignIn: SignInButton
-    private lateinit var buttonGuest: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener { loginUser() }
         buttonRegister.setOnClickListener { registerUser() }
         buttonGoogleSignIn.setOnClickListener { loginWithGoogle() }
-        buttonGuest.setOnClickListener { redirectToMainActivity() }
     }
 
     private fun initializeUI() {
@@ -83,12 +80,9 @@ class LoginActivity : AppCompatActivity() {
                 val response = credentialManager.getCredential(this@LoginActivity, request)
                 handleSignIn(response.credential)
 
-//            } catch (e: GetCredentialCancellationException) {
-//                e.printStackTrace()
-//                Toast.makeText(this@LoginActivity, "Inicio de sesión cancelado", Toast.LENGTH_SHORT).show()
             } catch (e: GetCredentialException) {
                 e.printStackTrace()
-                Toast.makeText(this@LoginActivity, "Error en inicio de sesión", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Error logging in with Google", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -113,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                         redirectToMainActivity()
                     }
                 } else {
-                    Toast.makeText(this, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -133,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 if (!task.isSuccessful) {
-                    Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error logging in", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -145,12 +139,12 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword.text.toString().trim()
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Introduce email y contraseña", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Introduce your email and password", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (password.length < 6) {
-            Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -164,7 +158,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 if (!task.isSuccessful) {
-                    Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error registering user", Toast.LENGTH_SHORT).show()
                 }
 
 

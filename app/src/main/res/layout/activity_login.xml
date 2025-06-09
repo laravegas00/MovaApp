@@ -9,11 +9,15 @@
     tools:context=".LoginActivity"
     tools:ignore="MissingClass">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/logo" />
 
     <EditText
         android:id="@+id/etUser"
@@ -78,14 +82,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"/>
-
-    <Button
-        android:id="@+id/btnGuest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continue as guest"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="#F57C00"
-        android:layout_gravity="center"/>
 
 </LinearLayout>
