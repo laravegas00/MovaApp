@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvDepartureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:05"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDepartureCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MAD"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tvDepartureTime"
+            app:layout_constraintStart_toStartOf="@id/tvDepartureTime" />
+
+        <TextView
+            android:id="@+id/tvArrivalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:30"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvArrivalCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LHR"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tvArrivalTime"
+            app:layout_constraintEnd_toEndOf="@id/tvArrivalTime" />
+
+        <TextView
+            android:id="@+id/tvFlightDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2h 25min"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvArrivalTime"
+            app:layout_constraintEnd_toStartOf="@id/tvArrivalTime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/tvDepartureTime"
+            app:layout_constraintTop_toTopOf="@id/tvDepartureTime" />
+
+        <TextView
+            android:id="@+id/tvAirline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Iberia"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tvDepartureCity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="266€"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            app:layout_constraintTop_toBottomOf="@id/tvAirline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFlightType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_direct"
+            android:padding="4dp"
+            android:text="Directo"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="12sp"
+            android:drawablePadding="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFlightDuration"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvStopoverDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:paddingTop="4dp"
+            android:text="Escala en: CDG\nLlegada: 12:40\nSalida: 15:20\nEspera: 2h 40min\nAerolínea: Air France"
+            app:layout_constraintTop_toBottomOf="@id/tvFlightType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

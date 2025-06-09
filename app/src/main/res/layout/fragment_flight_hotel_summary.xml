@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground">
+
+    <LinearLayout
+        android:id="@+id/flightHotelContainer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Fechas -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCheckInDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="10/06/2025" />
+
+            <TextView
+                android:id="@+id/tvCheckOutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="13/06/2025" />
+        </LinearLayout>
+
+        <!-- Pasajeros y huéspedes -->
+        <TextView
+            android:id="@+id/tvGuests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 pasajeros · 2 huéspedes"
+            android:paddingTop="8dp"
+            android:textColor="#444"
+            android:textSize="16sp" />
+
+        <!-- Vuelo Ida -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outbound Flight"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvResumenVuelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ORY ➝ BCN"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvResumenHorasVuelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:45 - 12:15"
+            android:textSize="14sp"
+            android:textColor="#555" />
+
+        <TextView
+            android:id="@+id/tvResumenDuracionVuelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duración: 1h 30min"
+            android:textSize="14sp"
+            android:textColor="#777" />
+
+        <TextView
+            android:id="@+id/tvResumenPrecioVuelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio: 150.00 EUR"
+            android:paddingBottom="8dp"
+            android:textSize="14sp" />
+
+        <!-- Vuelo Vuelta -->
+        <LinearLayout
+            android:id="@+id/vueltaContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:text="Return Flight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvResumenVueloVuelta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BCN ➝ ORY"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingTop="4dp" />
+
+            <TextView
+                android:id="@+id/tvResumenHorasVueloVuelta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14:00 - 16:30"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <TextView
+                android:id="@+id/tvResumenDuracionVueloVuelta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duración: 2h 30min"
+                android:textSize="14sp"
+                android:textColor="#777" />
+
+            <TextView
+                android:id="@+id/tvResumenPrecioVueloVuelta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio: 120.00 EUR"
+                android:paddingBottom="8dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Hotel -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hotel"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+
+        <ImageView
+            android:id="@+id/imgHotel"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginVertical="8dp" />
+
+        <TextView
+            android:id="@+id/txtHotelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Hotel"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtHotelLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dirección del hotel"
+            android:textColor="#666666" />
+
+        <TextView
+            android:id="@+id/txtHotelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio hotel: 300.00 EUR"
+            android:textStyle="italic"
+            android:paddingTop="4dp" />
+
+        <!-- Total -->
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: 570.00 EUR"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp" />
+
+        <!-- Confirmar -->
+        <Button
+            android:id="@+id/btnConfirmBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Reservation"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.hotels.HotelFragment">
+
+    <!-- Bienvenida -->
+    <ImageView
+        android:id="@+id/imgPlane"
+        android:layout_width="match_parent"
+        android:layout_height="138dp"
+        android:contentDescription="Plane"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hotel"
+        app:layout_constraintBottom_toTopOf="@+id/txtWelcome"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Welcome, traveler!"
+        android:textColor="#263238"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgPlane" />
+
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/txtChooseFlight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Choose your hotel"
+        android:textAllCaps="true"
+        android:textColor="#00796B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtWelcome" />
+
+
+    <LinearLayout
+        android:id="@+id/fromToCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtChooseFlight"
+        tools:layout_editor_absoluteX="16dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextHotel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bg"
+            android:hint="City Name"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerHotel"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            android:background="@android:color/white"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dateLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromToCard">
+
+        <EditText
+            android:id="@+id/etCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_bg"
+            android:hint="Check-in Date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            android:padding="12dp" />
+
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/etCheckOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_bg"
+            android:hint="Check-out Date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            android:padding="12dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passengerCounterLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLayout">
+
+        <ImageButton
+            android:id="@+id/btnDecrease"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Decrease"
+            android:src="@drawable/menos"
+            app:tint="#F57C00" />
+
+        <TextView
+            android:id="@+id/txtGuestCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:text="1"
+            android:textColor="#263238"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnIncrease"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Increase"
+            android:src="@drawable/mas"
+            app:tint="#F57C00" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#00796B"
+        android:text="Search Hotels"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passengerCounterLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

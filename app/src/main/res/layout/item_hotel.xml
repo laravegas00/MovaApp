@@ -1,0 +1,68 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/ivHotelImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hotel" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvHotelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hotel Name"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvHotelCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City, Country"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvHotelRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⭐ 8.4 (1234 reviews)"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvHotelPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123.45 EUR"
+                android:textStyle="bold"
+                android:textColor="@color/teal_700"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvHotelDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance from center: 1.2 km"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

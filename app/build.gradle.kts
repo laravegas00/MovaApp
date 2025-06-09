@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
     id ("androidx.navigation.safeargs.kotlin")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -58,40 +59,34 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
-
-    // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
-    // Credential Manager
+
+    //CredentialManager y GoogleIdentity
     implementation("androidx.credentials:credentials:1.2.0-alpha02")
-
-// Google Identity (Sign In with Google moderno)
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0") // Última versión estable
-
-
-    // Also add the dependencies for the Credential Manager libraries and specify their versions
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-
-// OkHttp para manejar solicitudes y cuerpos
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
-
-// Kotlin Extensions para RequestBody (para usar .toRequestBody())
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.10.0")
 
     implementation (libs.material)
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
 
 
 }

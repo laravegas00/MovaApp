@@ -1,0 +1,8 @@
+<com.google.android.material.chip.Chip
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:id="@+id/chipFilter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checkable="true"
+    android:text="Filtro" />

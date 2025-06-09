@@ -1,0 +1,158 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivLoading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/cargandovuelos"
+            android:scaleType="centerInside" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_bg"
+        android:backgroundTint="#fef9e7">
+
+        <TextView
+            android:id="@+id/tvRouteSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MAD ➝ BCN"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tvDatePassengerSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10-05-2025 ➝ 15-05-2025 - 2 pasajeros"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:background="#a2d9ce"/>
+
+    </LinearLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupFilters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:singleSelection="false"
+            app:chipSpacing="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPriceDesc"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                app:chipBackgroundColor="@color/chip_filter_color"
+                android:textColor="@color/white"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDirect"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_filter_color"
+                android:textColor="@color/white"
+                android:text="Direct Flight"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipScales"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_filter_color"
+                android:textColor="@color/white"
+                android:text="With scales"
+                android:checkable="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipShortDuration"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_filter_color"
+                android:textColor="@color/white"
+                android:text="Less duration"
+                android:checkable="true" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outbound flights"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Origen - Destino"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFlights"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/noResultsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/triste"/>
+
+        <TextView
+            android:id="@+id/tvNoResultsMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WOW! There are no flights for this route"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingTop="12dp" />
+    </LinearLayout>
+
+</LinearLayout>
