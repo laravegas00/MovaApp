@@ -226,10 +226,10 @@ class DetailsHotelFragment : Fragment() {
 
         userDocRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
-                val name = document.getString("name") ?: "No name"
-                val address = document.getString("address") ?: "No address"
-                val phone = document.getString("phone") ?: "No phone"
-                val email = document.getString("email") ?: "No email"
+                val name = document.getString("name")?.let { encryptHelper.decrypt(it) } ?: ""
+                val address = document.getString("address")?.let { encryptHelper.decrypt(it) } ?: ""
+                val phone = document.getString("phone")?.let { encryptHelper.decrypt(it) } ?: ""
+                val email = document.getString("email")?.let { encryptHelper.decrypt(it) } ?: ""
 
                 val mensaje = """
                     Name: $name

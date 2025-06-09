@@ -50,10 +50,10 @@ class UserDataFragment : Fragment() {
             }
 
             val data = mapOf(
-                "name" to name,
-                "email" to email,
-                "address" to address,
-                "phone" to phone
+                "name" to encryptHelper.encrypt(name),
+                "email" to encryptHelper.encrypt(email),
+                "address" to encryptHelper.encrypt(address),
+                "phone" to encryptHelper.encrypt(phone)
             )
 
             firestore.collection("users").document(userId)
@@ -96,10 +96,10 @@ class UserDataFragment : Fragment() {
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val name = document.getString("name") ?: ""
-                    val email = document.getString("email") ?: ""
-                    val address = document.getString("address") ?: ""
-                    val phone = document.getString("phone") ?: ""
+                    val name = document.getString("name")?.let { encryptHelper.decrypt(it) } ?: ""
+                    val email = document.getString("email")?.let { encryptHelper.decrypt(it) } ?: ""
+                    val address = document.getString("address")?.let { encryptHelper.decrypt(it) } ?: ""
+                    val phone = document.getString("phone")?.let { encryptHelper.decrypt(it) } ?: ""
 
                     if (name.isNotEmpty() && email.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
                         val resumen = "Name: $name\nEmail: $email\nAddress: $address\nPhone: $phone"

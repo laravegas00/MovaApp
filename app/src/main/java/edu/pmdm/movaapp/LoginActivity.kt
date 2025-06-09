@@ -168,8 +168,8 @@ class LoginActivity : AppCompatActivity() {
     private fun saveUserData(userId: String, name: String?, email: String?) {
         val userData = hashMapOf(
             "userId" to userId,
-            "email" to email,
-            "name" to name,
+            "email" to encryptHelper.encrypt(email.toString()),
+            "name" to encryptHelper.encrypt(name.toString()),
             "address" to "",
             "phone" to ""
         )
