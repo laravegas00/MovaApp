@@ -5,9 +5,15 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/flightFragment">
 
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="edu.pmdm.movaapp.LoginActivity"
+        android:exported="true"
+        android:label="@string/app_name" />
+
     <fragment
         android:id="@+id/flightFragment"
-        android:name="edu.pmdm.movaapp.ui.home.FlightFragment"
+        android:name="edu.pmdm.movaapp.ui.flights.FlightFragment"
         android:label="Search your Flight"
         tools:layout="@layout/fragment_home" >
         <action
@@ -68,6 +74,15 @@
         tools:layout="@layout/fragment_summary">
 
         <argument
+            android:name="departureDate"
+            app:argType="string" />
+
+        <argument
+            android:name="returnDate"
+            app:argType="string"
+            app:nullable="true"/>
+
+        <argument
             android:name="fromFullName"
             app:argType="string" />
 
@@ -80,11 +95,15 @@
             app:argType="boolean"
             android:defaultValue="false" />
 
+        <action
+            android:id="@+id/action_flightSummaryFragment_to_hotelFragment"
+            app:destination="@id/hotelFragment"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/hotelFragment"
-        android:name="edu.pmdm.movaapp.ui.gallery.HotelFragment"
+        android:name="edu.pmdm.movaapp.ui.hotels.HotelFragment"
         android:label="Search your Hotel"
         tools:layout="@layout/fragment_gallery">
 
@@ -147,17 +166,55 @@
             android:name="nights"
             app:argType="integer"
             android:defaultValue="1" />
+
+        <action
+            android:id="@+id/action_hotelDetailsFragment_to_finalSummaryFragment"
+            app:destination="@id/flightHotelSummary" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/flightHotelSummary"
+        android:name="edu.pmdm.movaapp.FlightHotelSummary"
+        android:label="Final Summary"
+        tools:layout="@layout/fragment_flight_hotel_summary">
+
+        <argument
+            android:name="checkInDate"
+            app:argType="string" />
+
+        <argument
+            android:name="checkOutDate"
+            app:argType="string" />
+
+        <argument
+            android:name="adults"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/action_finalSummaryFragment_to_homeFragment"
+            app:destination="@id/flightFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/reservationFragment"
-        android:name="edu.pmdm.movaapp.ui.slideshow.ReservationFragment"
+        android:name="edu.pmdm.movaapp.ui.reservations.ReservationFragment"
         android:label="My Reservations"
         tools:layout="@layout/fragment_slideshow" >
         <action
-            android:id="@+id/action_nav_slideshow_to_homeFragment"
+            android:id="@+id/action_nav_slideshow_to_flightFragment"
             app:destination="@id/flightFragment" />
+        <action
+            android:id="@+id/action_nav_slideshow_to_hotelsFragment"
+            app:destination="@id/hotelFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userDataFragment"
+        android:name="edu.pmdm.movaapp.UserDataFragment"
+        android:label="User Data"
+        tools:layout="@layout/fragment_user_data" />
+
 
 
 </navigation>

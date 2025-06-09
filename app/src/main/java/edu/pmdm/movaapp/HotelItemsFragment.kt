@@ -107,7 +107,7 @@ class HotelItemsFragment : Fragment() {
                         setupFilters()
                         binding.recyclerHotels.visibility = View.VISIBLE
                     } else {
-                        showNoResults("No se encontraron hoteles.")
+                        showNoResults("WOW! There are no hotels available for this date.")
                     }
                 }
 

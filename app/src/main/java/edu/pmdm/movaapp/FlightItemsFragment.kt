@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.format.DateTimeParseException
 
@@ -76,22 +77,27 @@ class FlightItemsFragment : Fragment() {
             to = toFullName.substringBefore(" -").trim()
         }
 
-        Log.d("FlightItems", "CARGANDO: from=$from, to=$to, departureDate=$departureDate, returnDate=$returnDate")
-
         // Mostrar resumen de parámetros
         isReturn = FlightItemsFragmentArgs.fromBundle(requireArguments()).isReturn
+        val fechaInfo = if (!returnDate.isNullOrEmpty()) {
+            "$departureDate ➝ $returnDate"
+        } else {
+            "$departureDate"
+        }
+
+        val date = SimpleDateFormat("dd/MM/yyyy").format(SimpleDateFormat("yyyy-MM-dd").parse(fechaInfo))
 
         // Mostrar resumen
         if (isReturn) {
-            binding.tvTitle.text = "Vuelos de vuelta"
+            binding.tvTitle.text = "Return flight"
             binding.tvRouteSummary.text = "$toFullName ➝ $fromFullName"
             binding.tvSummary.text = "$toFullName ➝ $fromFullName"
-            binding.tvDatePassengerSummary.text = "$returnDate - $passengers pasajero(s)"
+            binding.tvDatePassengerSummary.text = "$departureDate - $passengers passenger (s)"
         } else {
-            binding.tvTitle.text = "Vuelos de ida"
+            binding.tvTitle.text = "Outbound flight"
             binding.tvRouteSummary.text = "$fromFullName ➝ $toFullName"
             binding.tvSummary.text = "$fromFullName ➝ $toFullName"
-            binding.tvDatePassengerSummary.text = "$departureDate ➝ $returnDate - $passengers pasajero(s)"
+            binding.tvDatePassengerSummary.text = "$date - $passengers passenger(s)"
         }
 
         // Setup RecyclerView
@@ -103,6 +109,8 @@ class FlightItemsFragment : Fragment() {
 
                 val action = FlightItemsFragmentDirections
                     .actionFlightItemsFragmentToSummaryFragment(
+                        departureDate = departureDate,
+                        returnDate = returnDate,
                         fromFullName = fromFullName,
                         toFullName = toFullName,
                         isReturnTrip = true
@@ -126,12 +134,13 @@ class FlightItemsFragment : Fragment() {
                 } else {
                     val action = FlightItemsFragmentDirections
                         .actionFlightItemsFragmentToSummaryFragment(
+                            departureDate = departureDate,
+                            returnDate = null,
                             fromFullName = fromFullName,
                             toFullName = toFullName,
                             isReturnTrip = false
                         )
 
-                    binding.tvDatePassengerSummary.text = "$departureDate - $passengers pasajero(s)"
                     findNavController().navigate(action)
                 }
             }
@@ -167,7 +176,6 @@ class FlightItemsFragment : Fragment() {
                         allFlights = flights
                         flightAdapter.setFlights(flights)
                         setupFilters()
-                        Log.d("FlightItems", "Cargados ${flights.size} vuelos")
                     } else {
                         binding.recyclerFlights.visibility = View.GONE
                         binding.noResultsContainer.visibility = View.VISIBLE
@@ -183,7 +191,7 @@ class FlightItemsFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     if (!isAdded || _binding == null) return@withContext
                     Log.e("FlightItems", "Error al cargar vuelos: ${e.localizedMessage}")
-                    Toast.makeText(requireContext(), "Error al cargar vuelos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error loading flights", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 withContext(Dispatchers.Main) {

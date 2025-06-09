@@ -7,15 +7,30 @@
     android:radius="12dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <TextView
+            android:id="@+id/tvTituloVueloIda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outbound Flight"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <!-- SECCIÓN DE VUELO -->
         <LinearLayout
+            android:id="@+id/layoutVuelo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginStart="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tvReservaRuta"
@@ -23,35 +38,101 @@
                 android:layout_height="wrap_content"
                 android:text="MAD ➝ LHR"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvReservaFecha"
+                android:id="@+id/tvReservaFechaVuelo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2025-06-01"
                 android:textSize="14sp" />
-
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:layout_gravity="end">
+        <TextView
+            android:id="@+id/tvTituloVueloVuelta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Return Flight"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
+        <LinearLayout
+            android:id="@+id/layoutVueloVuelta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvReservaRuta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MAD ➝ LHR"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvReservaFechaVuelo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2025-06-01"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTituloHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hotel"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <!-- SECCIÓN DE HOTEL -->
+        <LinearLayout
+            android:id="@+id/layoutHotel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:id="@+id/tvReservaHotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hotel Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvReservaFechaHotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01 Jun - 03 Jun"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- PRECIO TOTAL -->
         <TextView
             android:id="@+id/tvReservaPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
             android:text="290.00 EUR"
             android:textColor="@color/teal_700"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"/>
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

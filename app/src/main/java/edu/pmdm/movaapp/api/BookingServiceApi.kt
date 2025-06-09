@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface BookingServiceApi {
 
     @Headers(
-        "X-RapidAPI-Key:  9c04b1a854msh2056acaabc5ce24p142c9djsnbdd53d066b65", // Reemplaza con tu key
+        "X-RapidAPI-Key:  f1b3f83b1amsh7337fdbf4f98cbap1ad7bfjsn234c04bf270b", // Reemplaza con tu key
         "X-RapidAPI-Host: booking-com.p.rapidapi.com"
     )
     @GET("v1/flights/locations")
@@ -21,7 +21,7 @@ interface BookingServiceApi {
     ): List<BookingAirport>
 
     @Headers(
-        "X-RapidAPI-Key:  9c04b1a854msh2056acaabc5ce24p142c9djsnbdd53d066b65", // Reemplaza con tu key
+        "X-RapidAPI-Key:  f1b3f83b1amsh7337fdbf4f98cbap1ad7bfjsn234c04bf270b", // Reemplaza con tu key
         "X-RapidAPI-Host: booking-com.p.rapidapi.com"
     )
     @GET("v1/hotels/locations")
@@ -31,7 +31,7 @@ interface BookingServiceApi {
     ): List<CityResponse>
 
     @Headers(
-        "X-RapidAPI-Key:  9c04b1a854msh2056acaabc5ce24p142c9djsnbdd53d066b65", // Reemplaza con tu key
+        "X-RapidAPI-Key:  f1b3f83b1amsh7337fdbf4f98cbap1ad7bfjsn234c04bf270b", // Reemplaza con tu key
         "X-RapidAPI-Host: booking-com.p.rapidapi.com"
     )
     @GET("v1/hotels/search")
@@ -49,7 +49,7 @@ interface BookingServiceApi {
     ): HotelResponse
 
     @Headers(
-        "X-RapidAPI-Key:  9c04b1a854msh2056acaabc5ce24p142c9djsnbdd53d066b65", // Reemplaza con tu key
+        "X-RapidAPI-Key:  f1b3f83b1amsh7337fdbf4f98cbap1ad7bfjsn234c04bf270b", // Reemplaza con tu key
         "X-RapidAPI-Host: booking-com.p.rapidapi.com"
     )
 

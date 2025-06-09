@@ -1,4 +1,4 @@
-package edu.pmdm.movaapp.ui.slideshow
+package edu.pmdm.movaapp.ui.reservations
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

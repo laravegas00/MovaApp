@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/flightFragment"
-        android:name="edu.pmdm.movaapp.ui.home.FlightFragment"
+        android:name="edu.pmdm.movaapp.ui.flights.FlightFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/hotelFragment"
-        android:name="edu.pmdm.movaapp.ui.gallery.HotelFragment"
+        android:name="edu.pmdm.movaapp.ui.hotels.HotelFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/reservationFragment"
-        android:name="edu.pmdm.movaapp.ui.slideshow.ReservationFragment"
+        android:name="edu.pmdm.movaapp.ui.reservations.ReservationFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

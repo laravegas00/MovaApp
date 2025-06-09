@@ -122,7 +122,7 @@
             android:id="@+id/tvNoResultsMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WOW! There are no flights for this route"
+            android:text="WOW! There are no hotels available for this date"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:paddingTop="12dp" />

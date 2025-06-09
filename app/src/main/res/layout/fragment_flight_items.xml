@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price"
-                android:backgroundTint="#00796B"
+                app:chipBackgroundColor="@color/chip_filter_color"
                 android:textColor="@color/white"
                 android:checkable="true" />
 
@@ -79,7 +79,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#00796B"
+                app:chipBackgroundColor="@color/chip_filter_color"
                 android:textColor="@color/white"
                 android:text="Direct Flight"
                 android:checkable="true" />
@@ -89,7 +89,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#00796B"
+                app:chipBackgroundColor="@color/chip_filter_color"
                 android:textColor="@color/white"
                 android:text="With scales"
                 android:checkable="true" />
@@ -99,7 +99,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#00796B"
+                app:chipBackgroundColor="@color/chip_filter_color"
                 android:textColor="@color/white"
                 android:text="Less duration"
                 android:checkable="true" />

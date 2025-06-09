@@ -87,13 +87,51 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
-            <TextView
-                android:text="1 accesorio personal\nSe guarda debajo del asiento que tengas delante"
-                android:textSize="14sp"
-                android:paddingBottom="8dp"
-                android:textColor="@color/black"
+            <LinearLayout
+                android:id="@+id/layoutLuggageCabin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/ivCabinBag"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/mochila"
+                    android:contentDescription="Cabin Bag" />
+
+                <TextView
+                    android:id="@+id/tvCabinBag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="1 cabin bag"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutLuggage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+                <ImageView
+                    android:id="@+id/ivCheckedBag"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/equipaje"
+                    android:contentDescription="Checked Bag" />
+
+                <TextView
+                    android:id="@+id/tvCheckedBag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="0 checked bag"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

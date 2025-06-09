@@ -17,16 +17,19 @@ data class Hotel(
     val adults: Int?,
     val main_photo_url: String?,
     val max_photo_url: String?,
-    val min_total_price: Double?,
+    val min_total_price: Double,
     val currencycode: String?,
     val review_score: Double?,
     val review_nr: Int?,
-    val checkin: CheckInOut?,
-    val checkout: CheckInOut?,
-    val is_free_cancellation: Boolean?,
+    val checkin: CheckInOut,
+    val checkout: CheckInOut,
+    val is_free_cancellable: Int,
     val is_breakfast_included: Boolean?,
     val distance: String?,
-    val hotel_facilities: String? = null
+    val hotel_facilities: String? = null,
+    val latitude: Double?,
+    val longitude: Double?
+
 ) : Parcelable
 
 @Parcelize

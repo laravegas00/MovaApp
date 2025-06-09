@@ -1,4 +1,4 @@
-package edu.pmdm.movaapp.ui.home
+package edu.pmdm.movaapp.ui.flights
 
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +21,6 @@ import edu.pmdm.movaapp.adapter.AirportAdapter
 import edu.pmdm.movaapp.api.Retrofit
 import edu.pmdm.movaapp.databinding.FragmentHomeBinding
 import edu.pmdm.movaapp.repository.AmadeusRepository
-import edu.pmdm.movaapp.repository.TokenManager
 import edu.pmdm.movaapp.viewmodel.SharedViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -158,12 +157,22 @@ class FlightFragment : Fragment() {
 
         //Configuramos el botón de búsqueda
         binding.btnSearch.setOnClickListener {
+
             fromFullText = binding.editTextFrom.text.toString().trim()
             toFullText = binding.editTextTo.text.toString().trim()
 
             val departure = departureApiDate
             val returnDate = returnApiDate.takeIf { it.isNotEmpty() }
             val passengers = binding.txtPassengerCount.text.toString().toIntOrNull() ?: 1
+
+            if (fromFullText.isBlank() || toFullText.isBlank()) {
+                Toast.makeText(requireContext(), "Please select airports", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (departure.isBlank()) {
+                Toast.makeText(requireContext(), "Please select a departure date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val action = FlightFragmentDirections
                 .actionHomeFragmentToFlightItemsFragment(

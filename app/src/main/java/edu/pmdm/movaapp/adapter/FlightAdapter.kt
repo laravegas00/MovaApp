@@ -71,11 +71,11 @@ class FlightAdapter : RecyclerView.Adapter<FlightAdapter.FlightViewHolder>() {
 
                     stopoverDetails.append(
                         """
-            Escala en: ${arrival.iataCode}
-            Llegada: ${formatTime(arrival.at)}
-            Salida: ${formatTime(nextDeparture.at)}
-            Espera: ${formatLayover(layoverMinutes)}
-            Aerolínea: ${segments[i + 1].carrierCode}
+            Scale in: ${arrival.iataCode}
+            Arrival: ${formatTime(arrival.at)}
+            Departure: ${formatTime(nextDeparture.at)}
+            Wait time: ${formatLayover(layoverMinutes)}
+            Carrier: ${segments[i + 1].carrierCode}
             
             """.trimIndent()
                     )

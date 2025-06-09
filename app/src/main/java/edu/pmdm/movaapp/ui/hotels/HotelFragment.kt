@@ -1,4 +1,4 @@
-package edu.pmdm.movaapp.ui.gallery
+package edu.pmdm.movaapp.ui.hotels
 
 import CityHotelAdapter
 import android.os.Bundle
@@ -92,12 +92,12 @@ class HotelFragment : Fragment() {
 
         binding.btnSearch.setOnClickListener {
             if (selectedDestId.isBlank()) {
-                Toast.makeText(requireContext(), "Selecciona una ciudad válida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please select a city", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (checkInDateApi.isBlank() || checkOutDateApi.isBlank()) {
-                Toast.makeText(requireContext(), "Selecciona fechas válidas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please select check-in and check-out dates", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -203,5 +203,12 @@ class HotelFragment : Fragment() {
         picker.show(parentFragmentManager, "DATE_PICKER")
     }
 
+    override fun onResume (){
+        super.onResume()
+        binding.editTextHotel.text.clear()
+        binding.etCheckIn.text.clear()
+        binding.etCheckOut.text.clear()
+        binding.txtGuestCount.text = "1"
+    }
 
 }

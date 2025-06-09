@@ -9,22 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import edu.pmdm.movaapp.databinding.FragmentSummaryBinding
-import edu.pmdm.movaapp.databinding.ItemSummaryFlightCardBinding
-import edu.pmdm.movaapp.viewmodel.SharedViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.pmdm.movaapp.api.Retrofit
+import edu.pmdm.movaapp.databinding.FragmentSummaryBinding
+import edu.pmdm.movaapp.databinding.ItemSummaryFlightCardBinding
 import edu.pmdm.movaapp.models.toMap
 import edu.pmdm.movaapp.repository.TokenManager
+import edu.pmdm.movaapp.viewmodel.SharedViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class FlightSummaryFragment : Fragment() {
@@ -33,6 +35,7 @@ class FlightSummaryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SharedViewModel by activityViewModels()
+    private val args: FlightSummaryFragmentArgs by navArgs()
 
     private lateinit var fromFullName: String
     private lateinit var toFullName: String
@@ -50,6 +53,8 @@ class FlightSummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.selectedHotel.value = null
+
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -58,7 +63,6 @@ class FlightSummaryFragment : Fragment() {
                 }
             })
 
-        val args = FlightSummaryFragmentArgs.fromBundle(requireArguments())
         fromFullName = args.fromFullName
         toFullName = args.toFullName
         val isReturnTrip = args.isReturnTrip
@@ -82,53 +86,14 @@ class FlightSummaryFragment : Fragment() {
             }
         }
 
-
-
         // Total
         val price1 = viewModel.selectedOutboundFlight.value?.price?.total?.toDoubleOrNull() ?: 0.0
         val price2 = viewModel.selectedReturnFlight.value?.price?.total?.toDoubleOrNull() ?: 0.0
         val currency = viewModel.selectedOutboundFlight.value?.price?.currency ?: "EUR"
         binding.tvTotalPrice.text = String.format("%.2f %s", price1 + price2, currency)
 
-        val select = binding.btnSelect
-        select.setOnClickListener {
-            val db = FirebaseFirestore.getInstance()
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@setOnClickListener
-
-            val outbound = viewModel.selectedOutboundFlight.value
-            val returnFlight = viewModel.selectedReturnFlight.value
-
-            val reserva = hashMapOf(
-                "timestamp" to System.currentTimeMillis(),
-                "totalPrice" to binding.tvTotalPrice.text.toString(),
-                "outboundFlight" to outbound?.toMap(isReturn = false)
-            )
-
-            if (returnFlight != null) {
-                reserva["returnFlight"] = returnFlight.toMap(isReturn = true)
-            }
-
-
-            db.collection("users")
-                .document(userId)
-                .collection("reservation")
-                .add(reserva)
-                .addOnSuccessListener {
-                    Toast.makeText(
-                        requireContext(),
-                        "Reservation saved correctly",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    findNavController().navigate(R.id.flightFragment)
-                }
-                .addOnFailureListener {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error saving reservation",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
+        binding.btnSelect.setOnClickListener {
+            checkUserDataBeforeReservation()
         }
 
     }
@@ -173,6 +138,33 @@ class FlightSummaryFragment : Fragment() {
 
             container.addView(cardBinding.root)
         }
+
+        Log.d("EQUIPAJE", "TravelerPricings: ${flight.travelerPricings}")
+
+        val baggageInfo = flight.travelerPricings
+            .flatMap { it.fareDetailsBySegment }
+            .mapNotNull { it.includedCheckedBags }
+            .map { bag ->
+                when {
+                    bag.quantity != null -> "${bag.quantity} checked bag(s) included"
+                    bag.weight != null -> "${bag.weight} ${bag.weightUnit ?: "KG"} included"
+                    else -> "No checked baggage included"
+                }
+            }.distinct()
+
+        val cabinBaggageInfo = flight.travelerPricings
+            .flatMap { it.fareDetailsBySegment }
+            .mapNotNull { it.includedCabinBags }
+            .map { bag ->
+                when {
+                    bag.quantity != null -> "${bag.quantity} cabin bag(s) included"
+                    else -> "No cabin baggage info"
+                }
+            }.distinct()
+
+        binding.tvCheckedBag.text = baggageInfo.joinToString("\n")
+        binding.tvCabinBag.text = cabinBaggageInfo.joinToString("\n")
+
     }
 
     private suspend fun loadAirportNamesFromSegments(segments: List<Segment>) {
@@ -216,6 +208,158 @@ class FlightSummaryFragment : Fragment() {
             .replace("M", "min")
             .trim()
     }
+
+    private fun showHotelConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Do you want to book a hotel?")
+            .setMessage("You can complete your reservation adding an hotel")
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.selectedHotel.value = null
+                findNavController().navigate(R.id.action_flightSummaryFragment_to_hotelFragment)
+            }
+            .setNegativeButton("No") { _, _ ->
+                saveFlightReservation()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun confirmReserve() {
+        if (viewModel.selectedHotel.value == null) {
+            showHotelConfirmationDialog()
+        } else {
+            saveCompleteReservation()
+        }
+    }
+
+    private fun saveFlightReservation() {
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val outbound = viewModel.selectedOutboundFlight.value
+        val returnFlight = viewModel.selectedReturnFlight.value
+
+        val reserva = hashMapOf(
+            "timestamp" to System.currentTimeMillis(),
+            "type" to "flight",
+            "totalPrice" to binding.tvTotalPrice.text.toString(),
+            "outboundFlight" to outbound?.toMap(isReturn = false)
+        )
+
+        if (returnFlight != null) {
+            reserva["returnFlight"] = returnFlight.toMap(isReturn = true)
+        }
+
+
+        db.collection("users")
+            .document(userId)
+            .collection("reservation")
+            .add(reserva)
+            .addOnSuccessListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Reservation saved correctly",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.flightFragment)
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Error saving reservation",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun saveCompleteReservation() {
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val reserva = mutableMapOf<String, Any>(
+            "timestamp" to System.currentTimeMillis(),
+            "type" to "flight+hotel"
+        )
+
+        viewModel.selectedOutboundFlight.value?.let {
+            reserva["outboundFlight"] = it.toMap()
+        }
+        viewModel.selectedReturnFlight.value?.let {
+            reserva["returnFlight"] = it.toMap()
+        }
+        viewModel.selectedHotel.value?.let {
+            reserva["hotel"] = it.toMap(args.departureDate.toString(), args.returnDate.toString())
+        }
+
+        db.collection("users")
+            .document(userId)
+            .collection("reservation")
+            .add(reserva)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Reservation saved correctly", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.flightFragment)
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error saving reservation", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showConfirmationDialog(name: String, address: String, phone: String, email: String) {
+        val mensaje = """
+        Name: $name
+        
+        Address: $address
+        
+        Phone: $phone
+        
+        Email: $email
+        
+        
+        Do you confirm this data?
+    """.trimIndent()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirm your data")
+            .setMessage(mensaje)
+            .setIcon(R.drawable.user)
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.userDataConfirmed = true
+                confirmReserve()
+            }
+            .setNegativeButton("No") { _, _ ->
+                findNavController().navigate(R.id.userDataFragment)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun checkUserDataBeforeReservation() {
+
+        if (viewModel.userDataConfirmed) {
+            confirmReserve()
+            return
+        }
+
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val userDocRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+
+        userDocRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val name = document.getString("name") ?: "No name"
+                val address = document.getString("address") ?: "No address"
+                val phone = document.getString("phone") ?: "No phone"
+                val email = document.getString("email") ?: "No email"
+
+                showConfirmationDialog(name, address, phone, email)
+            } else {
+                findNavController().navigate(R.id.userDataFragment)
+            }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Error retrieving user data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
