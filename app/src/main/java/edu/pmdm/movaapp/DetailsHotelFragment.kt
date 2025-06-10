@@ -248,6 +248,11 @@ class DetailsHotelFragment : Fragment() {
                     .setMessage(mensaje)
                     .setPositiveButton("Yes") { _, _ ->
                         viewModel.userDataConfirmed = true
+                        if (name.isEmpty() || address.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+                            Toast.makeText(requireContext(), "Sorry, there are empty fields, please fill them to continue", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.userDataFragment)
+                            return@setPositiveButton
+                        }
                         onConfirmed()
                     }
                     .setNegativeButton("No") { _, _ ->
