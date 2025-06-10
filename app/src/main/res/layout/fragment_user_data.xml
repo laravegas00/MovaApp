@@ -27,9 +27,10 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:hint="Name"
             android:inputType="textPersonName"
-            android:layout_marginBottom="12dp" />
+            android:maxLength="20" />
 
         <EditText
             android:id="@+id/etEmail"
@@ -45,17 +46,19 @@
             android:id="@+id/etAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:hint="Address"
             android:inputType="textPostalAddress"
-            android:layout_marginBottom="12dp" />
+            android:maxLength="50" />
 
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:hint="Phone Number"
             android:inputType="phone"
-            android:layout_marginBottom="24dp" />
+            android:maxLength="9" />
 
         <TextView
             android:id="@+id/tvSummary"

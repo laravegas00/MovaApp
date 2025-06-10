@@ -155,10 +155,8 @@ class LoginActivity : AppCompatActivity() {
                         saveUserData(user.uid, user.displayName, user.email)
                         redirectToMainActivity()
                     }
-                }
-
-                if (!task.isSuccessful) {
-                    Toast.makeText(this, "Error registering user", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Wrong format email", Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -166,18 +164,34 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveUserData(userId: String, name: String?, email: String?) {
-        val userData = hashMapOf(
-            "userId" to userId,
-            "email" to encryptHelper.encrypt(email.toString()),
-            "name" to encryptHelper.encrypt(name.toString()),
-            "address" to "",
-            "phone" to ""
+        val userDocRef = db.collection("users").document(userId)
+
+        val updateData = hashMapOf(
+            "email" to encryptHelper.encrypt(email.toString())
         )
 
-        db.collection("users").document(userId)
-            .set(userData)
-            .addOnSuccessListener { Log.d("LogInActivity", "Usuario guardado en Firestore") }
-            .addOnFailureListener { e -> Log.e("LogInActivity", "Error al guardar usuario", e) }
+        userDocRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    userDocRef.update(updateData as Map<String, Any>)
+                        .addOnSuccessListener { Log.d("LogInActivity", "Update user in Firestore") }
+                        .addOnFailureListener { e -> Log.e("LogInActivity", "Error updating usuario", e) }
+                } else {
+                    val initialUserData = hashMapOf(
+                        "userId" to userId,
+                        "email" to encryptHelper.encrypt(email.toString()),
+                        "name" to encryptHelper.encrypt(name.toString()),
+                        "address" to "",
+                        "phone" to ""
+                    )
+                    userDocRef.set(initialUserData)
+                        .addOnSuccessListener { Log.d("LogInActivity", "New user saved in Firestore") }
+                        .addOnFailureListener { e -> Log.e("LogInActivity", "Error saving new user", e) }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("LogInActivity", "Error finding document user in Firestore", e)
+            }
 
         val editor = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit()
         editor.putString("userId", userId)
